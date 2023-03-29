@@ -72,53 +72,83 @@ const Chatbot = () => {
         return (<span class="loader"></span>);
     }
 
+    var input = document.getElementById('input1');
+
+    // if (input) {
+    //     input.addEventListener('click', () => {
+    //         alert('You clicked the button');
+    //     })
+    // }
+
+    if (input) {
+        input.addEventListener("keypress", function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('myBtn').click();
+            }
+        })
+    }
+
     return (
 
         <div className="chat-container">
             {/* Render the messages */}
-            <div className='chat-content'>
-                {messages.map((message, index) => (
-                    <div key={index} className={`message ${message.role === 'user' ? 'user' : 'bot'}`}>
-                        {message.content}
-                    </div>
-                ))}
-            </div>
+            <div>
+                <div className='chat-content'>
+                    {messages.map((message, index) => (
+                        <div key={index} className={`message ${message.role === 'user' ? 'user' : 'bot'}`}>
+                            {message.content}
+                        </div>
+                    ))}
+                </div>
 
-            <div id='loading' style={{ 'display': 'none'}}>
-                <span class="loader"></span>
+                <div id='loading' style={{ 'display': 'none' }}>
+                    <span class="loader"></span>
+                </div>
             </div>
+            <div>
+                {/* Input for sending messages */}
+                <div className="help-box-container">
+                    <div className="help-box" onClick={() => handleSendMessage("What is Balio's first value?")}> testing </div>
+                    <div className="help-box" onClick={() => handleSendMessage("What is Balio's first value?")}> testing2323 </div>
+                </div>
+                <div className="input-container">
+                    <input
+                        id='input1'
+                        type="text"
+                        className="input-text"
+                        placeholder="Type your message here..."
 
-            <div className="input-container">
-                <input
-                    id='input1'
-                    type="text"
-                    className="input-text"
-                    placeholder="Type your message here..."
-                // onKeyPress={(event) => {
-                //     if (event.key === 'Enter') {
-                //         handleSendMessage(event.target.value);
-                //         event.target.value = '';
-                //     }
-                // }}
-                />
-                <button className="send-button" onClick={() => handleSendMessageMock(document.querySelector('input').value)}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"><path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z"></path></svg></button>
+                    // onKeyPress={(event) => {
+                    //     if (event.key === 'Enter') {
+                    //         handleSendMessage(event.target.value);
+                    //         event.target.value = '';
+                    //     }
+                    // }}
+                    />
+                    <button id='myBtn' className="send-button" onClick={() => handleSendMessageMock(document.querySelector('input').value)}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1.25rem" height="1.25rem"><path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z"></path></svg></button>
+                </div>
+                {/* Powered by Abhi */}
+                <div className="powered-by-container">
+                    <span>Powered by Abhinav</span>
+                </div>
             </div>
 
             {/* Style options */}
             <style jsx>{`
                 body {
                     margin: 0;
-                    padding: 0;
-                    margin:0px 5%;
+                    padding: 0.5rem;
                     font-family: -apple-system,system-ui,BlinkMacSystemFont,Helvetica Neue,Helvetica,
                 }
                 
                 .chat-container {
-                    background-color: #f0f0f0;
-                    width: 100%;
-                    height: calc(100% - 40px);
-                    max-height: calc(100vh - 180px);
-                    margin-top: 60px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;                   
+                    background-color: #ffffff;
+                    width: 100%;                    
+                    height: calc(100vh - 0.5rem);
                 }
 
                 .chat-content {
@@ -167,12 +197,10 @@ const Chatbot = () => {
                 
                 .input-container {
                     display: flex;
-                    margin-top: auto;
-                    position: absolute;
+                    margin-top: 0.5rem;
                     bottom: 25px;
                     background-color: white;
                     z-index: 1;
-                    width: 90%;
                     padding: 4px 4px 4px 12px;
                     border-radius: 0.25rem;
                     border: 1px solid #e4e4e7;
@@ -205,7 +233,6 @@ const Chatbot = () => {
                     justify-content: left;
                     gap: 8px;
                     margin-bottom: 15px;
-                    position: absolute;
                     margin-left: 2px;
                     bottom: 50px; /* height of the input container */
                 }
@@ -217,24 +244,25 @@ const Chatbot = () => {
                     padding: 8px;
                     text-align: center;
                     cursor: pointer;
-                    z-index: 1;
+                    z-index: 1;                    
+                    margin-top: 50px
                 }
                 .powered-by-container {
                     display: flex;
-                    justify-content: center;
+                    justify-content: left;
                     align-items: center;
                     font-size: 10px;
-                    margin-top: 16px;
+                    margin-top: 0.5rem;
                     color: #999;
-                    position: fixed;
-                    bottom: 5px;
+                    bottom: 5px;                    
+                    margin-bottom: 0.5rem;
                 }
 
                 .loader {
                     width: 64px;
                     height: 44px;
                     position: relative;
-                    border: 5px solid #000000;
+                    border: 5px solid #959394;
                     border-radius: 8px;
                   }
                   .loader::before {
@@ -257,43 +285,25 @@ const Chatbot = () => {
                     width: 8px;
                     height: 8px;
                     border-radius: 50%;
-                    background-color: #000000;
-                    box-shadow: 16px 0 #000000, -16px 0 #000000;
+                    background-color: #959394;
+                    box-shadow: 16px 0 #959394, -16px 0 #959394;
                     animation: flash 0.5s ease-out infinite alternate;
                   }
                   
                   @keyframes flash {
                     0% {
-                      background-color: rgba(0, 0, 0, 0.25);
-                      box-shadow: 16px 0 rgba(0, 0, 0, 0.25), -16px 0 rgba(0, 0, 0, 1);
+                      background-color: rgba(149, 147,148, 0.25);
+                      box-shadow: 16px 0 rgba(149, 147,148, 0.25), -16px 0 rgba(149, 147,148,, 1);
                     }
                     50% {
-                      background-color: rgba(0, 0, 0, 1);
-                      box-shadow: 16px 0 rgba(0, 0, 0, 0.25), -16px 0 rgba(0, 0, 0, 0.25);
+                      background-color: rgba(149, 147,148, 1);
+                      box-shadow: 16px 0 rgba(149, 147,148, 0.25), -16px 0 rgba(149, 147,148, 0.25);
                     }
                     100% {
-                      background-color: rgba(0, 0, 0, 0.25);
-                      box-shadow: 16px 0 rgba(0, 0, 0, 1), -16px 0 rgba(0, 0, 0, 0.25);
+                      background-color: rgba(149, 147,148, 0.25);
+                      box-shadow: 16px 0 rgba(149, 147,148, 1), -16px 0 rgba(149, 147,148, 0.25);
                     }
                   }
-                      
-                      
-                                  
-                
-                /* Responsive styles */
-                @media only screen and (max-width: 5000px) {
-                    .chat-container {
-                        background-color: #ffffff;
-                        margin-top: 60px;
-                        border-radius: 8px;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: flex-end;
-                        max-height: calc(100vh - 180px);
-                        flex-grow: 1;
-                    }
-                
-                }
 
           `}</style>
 
